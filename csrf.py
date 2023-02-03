@@ -17,3 +17,6 @@ if response.status_code == 200:
     print("The website is vulnerable to CSRF.")
 else:
     print("The website is not vulnerable to CSRF.")
+
+    
+ 
