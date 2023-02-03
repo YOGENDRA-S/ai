@@ -32,4 +32,22 @@ if response.status_code == 200 and "root:" in response.text:
 else:
     print("The website is not vulnerable to SSRF.")
     
- 
+ import requests
+
+target_urls = [
+    "http://example.com/change_password",
+    "http://example.com/upload_file",
+    # ...
+]
+
+for target_url in target_urls:
+    # Check for CSRF vulnerabilities
+    response = requests.get(target_url)
+    if "CSRF" not in response.text and "token" not in response.text:
+        print(f"{target_url} is vulnerable to CSRF.")
+
+    # Check for SSRF vulnerabilities
+    response = requests.get(target_url, params={"url": "http://127.0.0.1"})
+    if "localhost" in response.text:
+        print(f"{target_url} is vulnerable to SSRF.")
+
