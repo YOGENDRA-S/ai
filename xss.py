@@ -32,7 +32,14 @@ def scan_url(url):
 if __name__ == "__main__":
     url = "https://example.com/"
     scan_url(url)
-import requests
+
+url = "https://example.com/vulnerable_page"
+payloads = ["'", "\\", "--", "<script>alert(1)</script>"]
+
+for payload in payloads:
+    r = requests.get(url + payload)
+    if r.status_code != 500:
+        print("Potential vulnerability found:", payload)
 
 payloads = [
     "<script>alert('XSS')</script>",
@@ -54,3 +61,6 @@ for target_url in target_urls:
             break
     else:
         print(f"{target_url} is not vulnerable to XSS.")
+
+        
+        
